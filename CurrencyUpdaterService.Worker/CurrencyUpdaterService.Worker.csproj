@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,5 +34,9 @@
     <None Remove="Application\**" />
     <None Remove="Domain\**" />
     <None Remove="Infrastructure\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CurrencyUpdaterService.Infrastructure\CurrencyUpdaterService.Infrastructure.csproj" />
   </ItemGroup>
 </Project>
