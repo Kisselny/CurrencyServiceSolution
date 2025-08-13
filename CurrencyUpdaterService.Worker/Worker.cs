@@ -1,3 +1,4 @@
+using CurrencyUpdaterService.Application;
 using CurrencyUpdaterService.Infrastructure.External;
 
 namespace CurrencyUpdaterService.Worker

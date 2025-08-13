@@ -1,6 +1,6 @@
 ﻿using CurrencyUpdaterService.Domain.Models;
 
-namespace CurrencyUpdaterService.Infrastructure.External;
+namespace CurrencyUpdaterService.Application;
 
 public interface ICurrencyApiClient
 {

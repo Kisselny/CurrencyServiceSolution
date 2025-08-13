@@ -1,6 +1,5 @@
+using CurrencyUpdaterService.Application;
 using CurrencyUpdaterService.Infrastructure.External;
-using Microsoft.Extensions.DependencyInjection;
-
 
 namespace CurrencyUpdaterService.Worker
 {

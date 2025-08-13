@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Text;
 using System.Xml.Linq;
+using CurrencyUpdaterService.Application;
 using CurrencyUpdaterService.Domain.Models;
 
 namespace CurrencyUpdaterService.Infrastructure.External;
