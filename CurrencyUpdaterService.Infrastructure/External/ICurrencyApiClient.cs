@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 using System.Xml.Linq;
 
 namespace CurrencyUpdaterService.Infrastructure.External;
@@ -26,6 +27,27 @@ public class CurrencyApiClient : ICurrencyApiClient
         var encoding = Encoding.GetEncoding("windows-1251");
         var xml = encoding.GetString(bytes);
         var doc = XDocument.Parse(xml);
-        return new List<CurrencyDto>();
+        
+        var currencies = doc
+            .Descendants("Valute")
+            .Select(v => new CurrencyDto
+            {
+                Id = (string?)v.Attribute("ID") ?? string.Empty,
+                CharCode = (string?)v.Element("CharCode") ?? string.Empty,
+                Name = (string?)v.Element("Name") ?? string.Empty,
+                Nominal = int.TryParse((string?)v.Element("Nominal"), out var n) ? n : 1,
+                Value = decimal.TryParse(
+                    ((string?)v.Element("Value"))?.Replace(',', '.') ?? "0",
+                    NumberStyles.Any,
+                    CultureInfo.InvariantCulture,
+                    out var d) 
+                    ? d 
+                    : 0m
+            })
+            .ToList();
+        
+        return currencies;
     }
+    
+    
 }
