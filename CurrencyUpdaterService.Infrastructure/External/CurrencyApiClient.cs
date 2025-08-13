@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Text;
 using System.Xml.Linq;
+using CurrencyUpdaterService.Domain.Models;
 
 namespace CurrencyUpdaterService.Infrastructure.External;
 
@@ -10,7 +11,7 @@ public class CurrencyApiClient : ICurrencyApiClient
 
     public CurrencyApiClient(HttpClient http) => _http = http;
     
-    public async Task<IEnumerable<CurrencyDto>> FetchCurrenciesAsync()
+    public async Task<List<Currency>> FetchCurrenciesAsync()
     {
         Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
         var url = "http://www.cbr.ru/scripts/XML_daily.asp";
@@ -23,16 +24,20 @@ public class CurrencyApiClient : ICurrencyApiClient
         var xml = encoding.GetString(bytes);
         var doc = XDocument.Parse(xml);
         
+        var currencies = MapDataToEntity(doc);
+        
+        return currencies;
+    }
+
+    private static List<Currency> MapDataToEntity(XDocument doc)
+    {
         var currencies = doc
             .Descendants("Valute")
-            .Select(v => new CurrencyDto
+            .Select(v => new Currency
             {
-                Id = (string?)v.Attribute("ID") ?? string.Empty,
-                CharCode = (string?)v.Element("CharCode") ?? string.Empty,
                 Name = (string?)v.Element("Name") ?? string.Empty,
-                Nominal = int.TryParse((string?)v.Element("Nominal"), out var n) ? n : 1,
-                Value = decimal.TryParse(
-                    ((string?)v.Element("Value"))?.Replace(',', '.') ?? "0",
+                Rate = decimal.TryParse(
+                    ((string?)v.Element("VunitRate"))?.Replace(',', '.') ?? "0",
                     NumberStyles.Any,
                     CultureInfo.InvariantCulture,
                     out var d) 
@@ -40,9 +45,6 @@ public class CurrencyApiClient : ICurrencyApiClient
                     : 0m
             })
             .ToList();
-        
         return currencies;
     }
-    
-    
 }

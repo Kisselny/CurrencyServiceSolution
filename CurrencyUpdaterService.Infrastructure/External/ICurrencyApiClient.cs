@@ -1,6 +1,8 @@
-﻿namespace CurrencyUpdaterService.Infrastructure.External;
+﻿using CurrencyUpdaterService.Domain.Models;
+
+namespace CurrencyUpdaterService.Infrastructure.External;
 
 public interface ICurrencyApiClient
 {
-    Task<IEnumerable<CurrencyDto>> FetchCurrenciesAsync();
+    Task<List<Currency>> FetchCurrenciesAsync();
 }
