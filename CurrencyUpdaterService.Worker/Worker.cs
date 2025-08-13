@@ -1,17 +1,19 @@
 using CurrencyUpdaterService.Application;
 using CurrencyUpdaterService.Infrastructure.External;
+using CurrencyUpdaterService.Infrastructure.Persistence;
+using CurrencyUpdaterService.Worker.Services;
 
 namespace CurrencyUpdaterService.Worker
 {
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private readonly ICurrencyApiClient _apiClient;
+        private readonly CustomServiceScopeFactory _scopeFactory;
 
-        public Worker(ILogger<Worker> logger, ICurrencyApiClient apiClient)
+        public Worker(ILogger<Worker> logger, CustomServiceScopeFactory scopeFactory)
         {
             _logger = logger;
-            _apiClient = apiClient;
+            _scopeFactory = scopeFactory;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -22,8 +24,16 @@ namespace CurrencyUpdaterService.Worker
                 {
                     _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
                 }
-
-                await _apiClient.FetchCurrenciesAsync();
+                
+                await _scopeFactory.RunInScopeAsync(async provider =>
+                {
+                    var apiClient = provider.GetRequiredService<ICurrencyApiClient>();
+                    var currencies = await apiClient.FetchCurrenciesAsync();
+                    
+                    var updateService = provider.GetRequiredService<ICurrencyUpdateService>();
+                    await updateService.UpsertCurrenciesAsync(currencies);
+                });
+                
                 await Task.Delay(1000, stoppingToken);
             }
         }
