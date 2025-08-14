@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MigrationsService.Infrastructure;
 
 namespace MigrationsService.Api;
@@ -20,6 +21,9 @@ public class Program
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
+        builder.Services.AddHealthChecks()
+            .AddCheck<MigrationHealthCheck>("migration_applied");
+
 
         var app = builder.Build();
 
@@ -34,12 +38,26 @@ public class Program
 
         app.UseAuthorization();
         
+        //TODO вынести эту мишуру в контроллер
         app.MapPost("/migrate", async (IMigrationRunner migrationRunner) =>
             {
                 await migrationRunner.ApplyMigrationsAsync();
                 return Results.Ok("Миграции успешно применены.");
             })
             //.RequireAuthorization()
+            .WithOpenApi();
+
+        app.MapHealthChecks("/health");
+        
+        //this is debug stuff yo
+        app.MapGet("/healthz", async (HealthCheckService hc) =>
+            {
+                var report = await hc.CheckHealthAsync();
+                return report.Status == HealthStatus.Healthy
+                    ? Results.Ok("Healthy")
+                    : Results.StatusCode(503);
+            })
+            .WithName("Healthz")
             .WithOpenApi();
 
         app.Run();

@@ -14,6 +14,7 @@ namespace CurrencyUpdaterService.Worker
             builder.Services.AddHostedService<Worker>();
             builder.Services.AddScoped<ICurrencyApiClient, CurrencyApiClient>();
             builder.Services.AddScoped<ICurrencyUpdateService, CurrencyUpdateService>();
+            builder.Services.AddScoped<IMigrationHealthService, MigrationHealthService>();
             builder.Services.AddSingleton<CustomServiceScopeFactory>();
             builder.Services.AddHttpClient();
             builder.Services.AddDbContext<CurrencyDbContext>(options =>
