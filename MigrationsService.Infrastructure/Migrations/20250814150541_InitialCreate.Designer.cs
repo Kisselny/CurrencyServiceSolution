@@ -11,7 +11,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MigrationsService.Infrastructure.Migrations
 {
     [DbContext(typeof(MigrationDbContext))]
-    [Migration("20250814133708_InitialCreate")]
+    [Migration("20250814150541_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -38,7 +38,7 @@ namespace MigrationsService.Infrastructure.Migrations
                         .HasColumnType("character varying(100)");
 
                     b.Property<decimal>("Rate")
-                        .HasColumnType("decimal(5,10)");
+                        .HasColumnType("decimal(18,10)");
 
                     b.HasKey("Id");
 

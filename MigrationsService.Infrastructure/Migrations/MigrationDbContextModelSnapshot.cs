@@ -35,7 +35,7 @@ namespace MigrationsService.Infrastructure.Migrations
                         .HasColumnType("character varying(100)");
 
                     b.Property<decimal>("Rate")
-                        .HasColumnType("decimal(5,10)");
+                        .HasColumnType("decimal(18,10)");
 
                     b.HasKey("Id");
 

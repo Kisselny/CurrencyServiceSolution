@@ -39,7 +39,7 @@ public class Program
                 await migrationRunner.ApplyMigrationsAsync();
                 return Results.Ok("Миграции успешно применены.");
             })
-            .RequireAuthorization()
+            //.RequireAuthorization()
             .WithOpenApi();
 
         app.Run();
