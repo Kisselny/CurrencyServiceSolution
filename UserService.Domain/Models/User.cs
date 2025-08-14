@@ -26,6 +26,11 @@ public class User
     #endregion
 
     #region public methods
+    
+    public bool IsPasswordCorrect(string password)
+    {
+        return Password == password;
+    }
 
     public void ChangeName(string newName)
     {
