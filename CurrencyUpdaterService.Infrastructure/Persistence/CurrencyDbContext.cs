@@ -19,7 +19,7 @@ public class CurrencyDbContext : DbContext
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.Rate).HasColumnType("decimal(18,4)");
+            entity.Property(e => e.Rate).HasColumnType("decimal(18,4)"); //TODO - 18 выглядит многовато
         });
     }
 

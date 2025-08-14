@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MigrationsService", "Migrat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationsService.Domain", "MigrationsService.Domain\MigrationsService.Domain.csproj", "{33E2B0AD-5FD7-4D8C-A214-BCB180F9FC2C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationsService.Infrastructure", "MigrationsService.Infrastructure\MigrationsService.Infrastructure.csproj", "{A1FF6EEF-61B4-41CC-A43B-5D95543FD511}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{33E2B0AD-5FD7-4D8C-A214-BCB180F9FC2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33E2B0AD-5FD7-4D8C-A214-BCB180F9FC2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33E2B0AD-5FD7-4D8C-A214-BCB180F9FC2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1FF6EEF-61B4-41CC-A43B-5D95543FD511}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1FF6EEF-61B4-41CC-A43B-5D95543FD511}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1FF6EEF-61B4-41CC-A43B-5D95543FD511}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1FF6EEF-61B4-41CC-A43B-5D95543FD511}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,5 +62,6 @@ Global
 		{593A86E5-D880-4B48-BA20-E48F6CC6120B} = {29C2B407-10C2-4D86-ABB2-2B47B08B67DC}
 		{B50A7F48-B636-4A33-B2AA-30E5FCF1074A} = {29C2B407-10C2-4D86-ABB2-2B47B08B67DC}
 		{33E2B0AD-5FD7-4D8C-A214-BCB180F9FC2C} = {4C55AF8F-EDBA-4613-A4AF-FCF5F8FEDDAC}
+		{A1FF6EEF-61B4-41CC-A43B-5D95543FD511} = {4C55AF8F-EDBA-4613-A4AF-FCF5F8FEDDAC}
 	EndGlobalSection
 EndGlobal
