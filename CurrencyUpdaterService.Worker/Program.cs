@@ -17,7 +17,7 @@ namespace CurrencyUpdaterService.Worker
             builder.Services.AddSingleton<CustomServiceScopeFactory>();
             builder.Services.AddHttpClient();
             builder.Services.AddDbContext<CurrencyDbContext>(options =>
-                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
 
             var host = builder.Build();
             host.Run();
