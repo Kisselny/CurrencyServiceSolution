@@ -19,6 +19,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationsService.Domain", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationsService.Infrastructure", "MigrationsService.Infrastructure\MigrationsService.Infrastructure.csproj", "{A1FF6EEF-61B4-41CC-A43B-5D95543FD511}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationsService.Api", "MigrationsService.Api\MigrationsService.Api.csproj", "{EBC84BC2-DBB8-48EB-B336-C7968B4FFBBC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C02CE41E-4559-4CF8-BD0C-07F142B07B8D}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +56,10 @@ Global
 		{A1FF6EEF-61B4-41CC-A43B-5D95543FD511}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1FF6EEF-61B4-41CC-A43B-5D95543FD511}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1FF6EEF-61B4-41CC-A43B-5D95543FD511}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBC84BC2-DBB8-48EB-B336-C7968B4FFBBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBC84BC2-DBB8-48EB-B336-C7968B4FFBBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBC84BC2-DBB8-48EB-B336-C7968B4FFBBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBC84BC2-DBB8-48EB-B336-C7968B4FFBBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,5 +74,6 @@ Global
 		{B50A7F48-B636-4A33-B2AA-30E5FCF1074A} = {29C2B407-10C2-4D86-ABB2-2B47B08B67DC}
 		{33E2B0AD-5FD7-4D8C-A214-BCB180F9FC2C} = {4C55AF8F-EDBA-4613-A4AF-FCF5F8FEDDAC}
 		{A1FF6EEF-61B4-41CC-A43B-5D95543FD511} = {4C55AF8F-EDBA-4613-A4AF-FCF5F8FEDDAC}
+		{EBC84BC2-DBB8-48EB-B336-C7968B4FFBBC} = {4C55AF8F-EDBA-4613-A4AF-FCF5F8FEDDAC}
 	EndGlobalSection
 EndGlobal
