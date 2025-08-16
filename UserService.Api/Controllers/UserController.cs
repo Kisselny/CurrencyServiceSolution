@@ -96,6 +96,40 @@ public class UserController : ControllerBase
         return Ok(User.Claims.Select(c => new { c.Type, c.Value }));
     }
 
+    [Authorize]
+    [HttpPost("me/favorites/{code}")]
+    public async Task<IActionResult> AddFavorite(
+        [FromRoute] string code,
+        [FromServices] AddFavoriteUseCase useCase,
+        CancellationToken ct)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                     ?? User.FindFirstValue("sub");
+        if (!int.TryParse(userId, out var id))
+        {
+            return Unauthorized();
+        }
+
+        await useCase.Handle(new AddFavoriteCommand(id, code), ct);
+        
+        return NoContent();
+    }
+
+    [Authorize]
+    [HttpDelete("me/favorites")]
+    public async Task<IActionResult> ClearFavorites(
+        [FromServices] ClearFavoritesUseCase useCase,
+        CancellationToken ct)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                     ?? User.FindFirstValue("sub");
+        if (!int.TryParse(userId, out var id)) return Unauthorized();
+
+        var deleted = await useCase.Handle(new ClearFavoritesCommand(id), ct);
+        return Ok(new { deleted });
+    }
+    
+    
     // [Authorize]
     // [HttpGet("me/favorites")]
     // public IActionResult GetFavorites()
