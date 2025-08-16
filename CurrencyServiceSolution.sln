@@ -36,6 +36,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Api", "UserServ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Infrastructure", "UserService.Infrastructure\UserService.Infrastructure.csproj", "{44E8EC5C-8271-4510-8CF2-04E6630AB4A5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CurrencyService", "CurrencyService", "{442A9265-0721-430F-8358-917EE8C913DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Domain", "CurrencyService.Domain\CurrencyService.Domain.csproj", "{1B2EFBA7-C834-4C11-880B-C8B251CA96C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +90,10 @@ Global
 		{44E8EC5C-8271-4510-8CF2-04E6630AB4A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44E8EC5C-8271-4510-8CF2-04E6630AB4A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44E8EC5C-8271-4510-8CF2-04E6630AB4A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B2EFBA7-C834-4C11-880B-C8B251CA96C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B2EFBA7-C834-4C11-880B-C8B251CA96C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B2EFBA7-C834-4C11-880B-C8B251CA96C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B2EFBA7-C834-4C11-880B-C8B251CA96C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,5 +113,6 @@ Global
 		{FFB54656-FA16-4C49-95AD-1D8312D37270} = {DD510FF3-DA83-4279-8B20-669B776BDC54}
 		{598D86DB-3054-4489-BFD3-22DE5D644940} = {DD510FF3-DA83-4279-8B20-669B776BDC54}
 		{44E8EC5C-8271-4510-8CF2-04E6630AB4A5} = {DD510FF3-DA83-4279-8B20-669B776BDC54}
+		{1B2EFBA7-C834-4C11-880B-C8B251CA96C8} = {442A9265-0721-430F-8358-917EE8C913DA}
 	EndGlobalSection
 EndGlobal
