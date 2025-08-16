@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserService.Application.Contracts;
+using UserService.Application.Interfaces;
 using UserService.Application.UseCases;
 
 namespace UserService.Api.Controllers;
@@ -69,6 +71,29 @@ public class UserController : ControllerBase
             userId,
             userName
         });
+    }
+    
+    [Authorize]
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout([FromServices] ITokenRevocationStore store, CancellationToken ct)
+    {
+        var jti = User.FindFirstValue(JwtRegisteredClaimNames.Jti);
+        var expUnix = User.FindFirst("exp")?.Value;
+        if (jti is null || expUnix is null) return NoContent();
+
+        var expUtc = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expUnix)).UtcDateTime;
+        var userId = int.Parse(User.FindFirstValue(JwtRegisteredClaimNames.Sub)!);
+
+        await store.RevokeAsync(jti, expUtc, userId, ct);
+        return NoContent();
+    }
+
+    //debug shit
+    [Authorize]
+    [HttpGet("me/claims")]
+    public IActionResult ClaimsDump()
+    {
+        return Ok(User.Claims.Select(c => new { c.Type, c.Value }));
     }
 
     // [Authorize]

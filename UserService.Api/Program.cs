@@ -46,7 +46,7 @@ public class Program
             });
         });
 
-        
+        builder.Services.AddSingleton<ITokenRevocationStore, InMemoryTokenRevocationStore>();
         builder.Services
             .AddAuthentication("Bearer")
             .AddJwtBearer(options =>
