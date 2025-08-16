@@ -1,4 +1,6 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using UserService.Application.Interfaces;
@@ -50,6 +52,7 @@ public class Program
             .AddJwtBearer(options =>
             {
                 var jwtConfig = builder.Configuration.GetSection("Jwt");
+                options.MapInboundClaims = false;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -61,6 +64,18 @@ public class Program
                         Encoding.UTF8.GetBytes(jwtConfig["Key"]!)),
                     ValidateLifetime = true
                 };
+                options.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = async ctx =>
+                    {
+                        var store = ctx.HttpContext.RequestServices.GetRequiredService<ITokenRevocationStore>();
+                        var jti = ctx.Principal?.FindFirst(JwtRegisteredClaimNames.Jti)?.Value;
+                        if (!string.IsNullOrEmpty(jti) && await store.IsRevokedAsync(jti))
+                        {
+                            ctx.Fail("Token has been revoked");
+                        }
+                    }
+                };
             });
 
         builder.Services.AddAuthorization();
@@ -71,23 +86,6 @@ public class Program
         builder.Services.AddDbContext<UserDbContext>(opt =>
             opt.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
         
-        //new
-        // var jwt = builder.Configuration.GetSection("Jwt");
-        // builder.Services.AddAuthentication("Bearer")
-        //     .AddJwtBearer(o =>
-        //     {
-        //         o.TokenValidationParameters = new()
-        //         {
-        //             ValidateIssuer = true,
-        //             ValidIssuer = jwt["Issuer"],
-        //             ValidateAudience = true,
-        //             ValidAudience = jwt["Audience"],
-        //             ValidateIssuerSigningKey = true,
-        //             IssuerSigningKey = new SymmetricSecurityKey(
-        //                 Encoding.UTF8.GetBytes(jwt["Key"]!)),
-        //             ValidateLifetime = true
-        //         };
-        //     });
 
 
         var app = builder.Build();
