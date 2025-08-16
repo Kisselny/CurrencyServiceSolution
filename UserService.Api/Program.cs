@@ -87,6 +87,10 @@ public class Program
             opt.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
         
 
+        builder.Services.AddScoped<IFavoritesRepository, FavoritesRepository>();
+        builder.Services.AddScoped<AddFavoriteUseCase>();
+        builder.Services.AddScoped<ClearFavoritesUseCase>();
+        
 
         var app = builder.Build();
 
