@@ -1,0 +1,108 @@
+using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using UserService.Application.Contracts;
+using UserService.Application.Interfaces;
+using UserService.Application.UseCases;
+
+namespace UserService.Api.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class UserController : ControllerBase
+{
+    private readonly ILogger<UserController> _logger;
+    private readonly UserLoginUseCase _loginUser;
+    private readonly UserRegistrationUseCase _registerUser;
+
+    public UserController(ILogger<UserController> logger, UserLoginUseCase loginUser, UserRegistrationUseCase registerUser)
+    {
+        _logger = logger;
+        _loginUser = loginUser;
+        _registerUser = registerUser;
+    }
+
+    [AllowAnonymous]
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] RegisterUserCommand command, CancellationToken ct)
+    {
+        try
+        {
+            await _registerUser.ExecuteAsync(command.Name, command.Password, command.ConfirmPassword);
+            return Created();
+
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+    
+    [AllowAnonymous]
+    [HttpPost("login")]
+    public async Task<ActionResult<LoginUserResult>> Login([FromBody] LoginUserCommand command, CancellationToken ct)
+    {
+        try
+        {
+            var result = await _loginUser.ExecuteAsync(command);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+    
+    //test shit
+    [Authorize]
+    [HttpGet("me/ping")]
+    public ActionResult<object> MePing()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                     ?? User.FindFirstValue("sub");
+        var userName = User.Identity?.Name 
+                       ?? User.FindFirstValue("unique_name");
+        
+        return Ok(new
+        {
+            ok = true,
+            userId,
+            userName
+        });
+    }
+    
+    [Authorize]
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout([FromServices] ITokenRevocationStore store, CancellationToken ct)
+    {
+        var jti = User.FindFirstValue(JwtRegisteredClaimNames.Jti);
+        var expUnix = User.FindFirst("exp")?.Value;
+        if (jti is null || expUnix is null) return NoContent();
+
+        var expUtc = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expUnix)).UtcDateTime;
+        var userId = int.Parse(User.FindFirstValue(JwtRegisteredClaimNames.Sub)!);
+
+        await store.RevokeAsync(jti, expUtc, userId, ct);
+        return NoContent();
+    }
+
+    //debug shit
+    [Authorize]
+    [HttpGet("me/claims")]
+    public IActionResult ClaimsDump()
+    {
+        return Ok(User.Claims.Select(c => new { c.Type, c.Value }));
+    }
+
+    // [Authorize]
+    // [HttpGet("me/favorites")]
+    // public IActionResult GetFavorites()
+    // {
+    //     var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)
+    //                            ?? User.FindFirstValue(JwtRegisteredClaimNames.Sub)!);
+    // }
+    
+    
+}

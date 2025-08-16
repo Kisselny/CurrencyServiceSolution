@@ -1,28 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using UserService.Domain.Models;
 
-using MigrationsService.Domain.Models;
+namespace UserService.Infrastructure.Persistence;
 
-namespace MigrationsService.Infrastructure;
-
-public class MigrationDbContext : DbContext
+public class UserDbContext : DbContext
 {
-    public DbSet<Currency> Currencies { get; set; }
-    public DbSet<User> Users { get; set; }
+    public UserDbContext(DbContextOptions<UserDbContext> options) : base(options) { }
 
-    public MigrationDbContext(DbContextOptions<MigrationDbContext> options)
-            : base(options)
-    {
-    }
+    public DbSet<User> Users => Set<User>();
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Currency>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
-            entity.Property(e => e.Rate).HasColumnType("decimal(18,10)");
-        });
-        
         modelBuilder.Entity<User>(entity =>
         {
             entity.ToTable("AppUsers");

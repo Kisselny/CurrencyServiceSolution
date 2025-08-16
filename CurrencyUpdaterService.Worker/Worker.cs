@@ -27,11 +27,21 @@ namespace CurrencyUpdaterService.Worker
                 
                 await _scopeFactory.RunInScopeAsync(async provider =>
                 {
-                    var apiClient = provider.GetRequiredService<ICurrencyApiClient>();
-                    var currencies = await apiClient.FetchCurrenciesAsync();
+                    var migrationHealthService = provider.GetRequiredService<IMigrationHealthService>();
                     
-                    var updateService = provider.GetRequiredService<ICurrencyUpdateService>();
-                    await updateService.UpsertCurrenciesAsync(currencies);
+                    if (await migrationHealthService.IsMigrationReadyAsync(stoppingToken))
+                    {
+                        var apiClient = provider.GetRequiredService<ICurrencyApiClient>();
+                        var currencies = await apiClient.FetchCurrenciesAsync();
+                        
+                        var updateService = provider.GetRequiredService<ICurrencyUpdateService>();
+                        await updateService.UpsertCurrenciesAsync(currencies);
+                        _logger.LogInformation("Миграции применены. Данные запрошены из внешнего API и сохранены в базу данных.");
+                    }
+                    else
+                    {
+                        _logger.LogWarning("Миграции не применены. Данные не были запрошены из внешнего API и  не сохранены в базу данных.");
+                    }
                 });
                 
                 await Task.Delay(1000, stoppingToken);
