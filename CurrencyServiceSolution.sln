@@ -40,6 +40,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CurrencyService", "Currency
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Domain", "CurrencyService.Domain\CurrencyService.Domain.csproj", "{1B2EFBA7-C834-4C11-880B-C8B251CA96C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Application", "CurrencyService.Application\CurrencyService.Application.csproj", "{8F2F22D7-4589-479D-A9BA-A979582E1096}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Infrastructure", "CurrencyService.Infrastructure\CurrencyService.Infrastructure.csproj", "{D4512216-A865-4F0F-9EB2-D4AAC21F3B18}"
 EndProject
 Global
