@@ -6,11 +6,14 @@ public class User
 
     public int Id { get; set; }
     public string Name { get; private set; }
-    private string Password { get; set; }
+    private string _password;
 
     #endregion
 
     #region .ctor
+    
+    //Для EF Core
+    private User() { }
 
     public User(string name, string password)
     {
@@ -20,17 +23,14 @@ public class User
 
         ValidatePasswordIsNotNullOrEmpty(password);
         ValidatePasswordLength(password);
-        Password = password;
+        _password  = password;
     }
 
     #endregion
 
     #region public methods
     
-    public bool IsPasswordCorrect(string password)
-    {
-        return Password == password;
-    }
+    public bool IsPasswordCorrect(string password) => _password == password;
 
     public void ChangeName(string newName)
     {
@@ -45,7 +45,7 @@ public class User
         ValidatePasswordIsNotNullOrEmpty(newPassword);
         ValidatePasswordLength(newPassword);
         EnsureNewPasswordIsDifferent(newPassword);
-        Password = newPassword;
+        _password = newPassword;
     }
 
     #endregion
@@ -94,7 +94,7 @@ public class User
 
     private void EnsureNewPasswordIsDifferent(string newPassword)
     {
-        if (newPassword == Password)
+        if (newPassword == _password)
         {
             throw new Exception("Новый пароль должен отличаться от старого.");
         }
