@@ -1,6 +1,6 @@
 using UserService.Domain.Models;
 
-namespace UserService.Application;
+namespace UserService.Application.Interfaces;
 
 public interface IUserRepository
 {
