@@ -1,3 +1,4 @@
+using UserService.Application.Interfaces;
 using UserService.Domain.Models;
 
 namespace UserService.Application.UseCases;

@@ -66,6 +66,7 @@ public class Program
         builder.Services.AddAuthorization();
         builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         builder.Services.AddScoped<UserLoginUseCase>();
+        builder.Services.AddScoped<UserRegistrationUseCase>();
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddDbContext<UserDbContext>(opt =>
             opt.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));

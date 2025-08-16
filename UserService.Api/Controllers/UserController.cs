@@ -13,19 +13,31 @@ public class UserController : ControllerBase
 {
     private readonly ILogger<UserController> _logger;
     private readonly UserLoginUseCase _loginUser;
+    private readonly UserRegistrationUseCase _registerUser;
 
-    public UserController(ILogger<UserController> logger, UserLoginUseCase loginUser)
+    public UserController(ILogger<UserController> logger, UserLoginUseCase loginUser, UserRegistrationUseCase registerUser)
     {
         _logger = logger;
         _loginUser = loginUser;
+        _registerUser = registerUser;
     }
 
-    // [AllowAnonymous]
-    // [HttpPost("register")]
-    // public IActionResult Register(string name, string password, string confirmPassword)
-    // {
-    // }
-    //
+    [AllowAnonymous]
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] RegisterUserCommand command, CancellationToken ct)
+    {
+        try
+        {
+            await _registerUser.ExecuteAsync(command.Name, command.Password, command.ConfirmPassword);
+            return Created();
+
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+    
     [AllowAnonymous]
     [HttpPost("login")]
     public async Task<ActionResult<LoginUserResult>> Login([FromBody] LoginUserCommand command, CancellationToken ct)
