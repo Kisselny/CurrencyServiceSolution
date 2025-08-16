@@ -19,10 +19,12 @@ public class JwtTokenGenerator : IJwtTokenGenerator
     public string GenerateToken(int userId, string userName)
     {
         var jwtSection = _config.GetSection("Jwt");
+        var jti = Guid.NewGuid().ToString();
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-            new Claim(JwtRegisteredClaimNames.UniqueName, userName)
+            new Claim(JwtRegisteredClaimNames.UniqueName, userName),
+            new Claim(JwtRegisteredClaimNames.Jti, jti)
         };
 
         var key = new SymmetricSecurityKey(
