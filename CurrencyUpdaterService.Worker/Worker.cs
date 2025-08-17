@@ -5,17 +5,26 @@ using CurrencyUpdaterService.Worker.Services;
 
 namespace CurrencyUpdaterService.Worker
 {
+    /// <summary>
+    /// Фоновый сервис, отвечающий за обновление курсов валют
+    /// </summary>
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
         private readonly CustomServiceScopeFactory _scopeFactory;
 
+        /// <summary>
+        /// Фоновый сервис, отвечающий за обновление курсов валют
+        /// </summary>
         public Worker(ILogger<Worker> logger, CustomServiceScopeFactory scopeFactory)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
         }
 
+        /// <summary>
+        /// Периодически обращается во внеший API за новыми данными о валютах
+        /// </summary>
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)

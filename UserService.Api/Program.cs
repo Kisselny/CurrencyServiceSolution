@@ -11,8 +11,10 @@ using UserService.Infrastructure.Persistence;
 
 namespace UserService.Api;
 
+///
 public class Program
 {
+    ///
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);

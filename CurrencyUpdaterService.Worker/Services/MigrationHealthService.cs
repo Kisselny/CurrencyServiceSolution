@@ -1,10 +1,16 @@
 namespace CurrencyUpdaterService.Worker.Services;
 
+/// <inheritdoc />
 public class MigrationHealthService : IMigrationHealthService
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IConfiguration _configuration;
     
+    /// <summary>
+    /// Представляет сервис для мониторинга готовности миграций базы данных
+    /// </summary>
+    /// <param name="httpClientFactory">HTTP-клиент</param>
+    /// <param name="configuration">Конфигурация</param>
     public MigrationHealthService(
         IHttpClientFactory httpClientFactory,
         IConfiguration configuration)
@@ -13,6 +19,7 @@ public class MigrationHealthService : IMigrationHealthService
         _configuration = configuration;
     }
 
+    /// <inheritdoc />
     public async Task<bool> IsMigrationReadyAsync(CancellationToken cancellationToken)
     {
         var healthUrl = "https://localhost:7091/health"; //_configuration["MigrationService:HealthUrl"];

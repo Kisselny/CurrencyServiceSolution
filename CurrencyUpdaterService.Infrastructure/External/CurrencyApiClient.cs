@@ -6,12 +6,16 @@ using CurrencyUpdaterService.Domain.Models;
 
 namespace CurrencyUpdaterService.Infrastructure.External;
 
+/// Предоставляет методы для получения данных о валютах из внешнего API
 public class CurrencyApiClient : ICurrencyApiClient
 {
     private readonly HttpClient _http;
 
+    /// Предоставляет методы для получения данных о валютах из внешнего API
     public CurrencyApiClient(HttpClient http) => _http = http;
-    
+
+    /// Асинхронно получает список валют и их курсов из внешнего API
+    /// <returns>Список валют</returns>
     public async Task<List<Currency>> FetchCurrenciesAsync()
     {
         Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
