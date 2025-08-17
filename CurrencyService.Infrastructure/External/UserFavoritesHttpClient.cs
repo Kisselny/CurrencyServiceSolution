@@ -5,12 +5,19 @@ using Microsoft.Extensions.Options;
 
 namespace CurrencyService.Infrastructure.External;
 
+/// Представляет клиент для взаимодействия с микросервисом пользователя для получения избранных элементов пользователя
 public class UserFavoritesHttpClient : IUserFavoritesClient
 {
     private readonly HttpClient _httpClient;
     private readonly UserServiceClientOptions _options;
     private static readonly JsonSerializerOptions _json = new(JsonSerializerDefaults.Web);
 
+    /// <summary>
+    /// Представляет клиент для взаимодействия с микросервисом пользователя для получения избранных элементов пользователя
+    /// </summary>
+    /// <param name="httpClient">HTTP-клиент</param>
+    /// <param name="options">Параметры конфигурации для клиента API сервиса пользователе</param>
+    /// <exception cref="InvalidOperationException"></exception>
     public UserFavoritesHttpClient(HttpClient httpClient, IOptions<UserServiceClientOptions>  options)
     {
         _httpClient = httpClient;
@@ -21,6 +28,12 @@ public class UserFavoritesHttpClient : IUserFavoritesClient
         _httpClient.BaseAddress = new Uri(_options.BaseUrl, UriKind.Absolute);        
     }
 
+    /// <summary>
+    /// Получает список избранных элементов пользователя
+    /// </summary>
+    /// <param name="userId">Идентификатор пользователя</param>
+    /// <param name="ct">Токен отмены операции</param>
+    /// <returns>Список избранных элементов</returns>
     public async Task<IReadOnlyList<string>> GetFavoritesAsync(int userId, CancellationToken ct = default)
     {
         using (var request = new HttpRequestMessage(HttpMethod.Get, $"/internal/users/{userId}/favorites"))

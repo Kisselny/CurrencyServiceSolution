@@ -1,5 +1,6 @@
 ﻿using CurrencyService.Application.Interfaces;
 using CurrencyService.Domain;
+using CurrencyService.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CurrencyService.Infrastructure.Persistence;

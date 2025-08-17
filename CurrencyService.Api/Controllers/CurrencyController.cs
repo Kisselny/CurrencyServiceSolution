@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CurrencyService.Api.Controllers;
 
+/// Представляет контроллер для работы с валютами
 [ApiController]
 [Route("[controller]")]
 public class CurrencyController : ControllerBase
@@ -15,12 +16,16 @@ public class CurrencyController : ControllerBase
     private readonly GetUserFavoriteCurrenciesUseCase _byUser;
     //private readonly GetRatesByCodesUseCase _byCodes;
 
+    /// Контроллер для операций над валютами
     public CurrencyController(ILogger<CurrencyController> logger, GetUserFavoriteCurrenciesUseCase byUser)
     {
         _logger = logger;
         _byUser = byUser;
     }
 
+    /// Возвращает избранные валюты текущего пользователя
+    /// <param name="ct">Токен отмены операции</param>
+    /// <return>Результат выполнения с коллекцией избранных валют</return>
     [Authorize]
     [HttpGet("by-user")]
     public async Task<ActionResult<GetUserFavoriteCurrenciesResult>> GetByUser(CancellationToken ct)
