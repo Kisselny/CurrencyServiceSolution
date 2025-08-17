@@ -53,7 +53,7 @@ namespace CurrencyUpdaterService.Worker
                     }
                 });
                 
-                await Task.Delay(1000, cancellationToken);
+                await Task.Delay(TimeSpan.FromMinutes(5), cancellationToken);
             }
         }
     }
