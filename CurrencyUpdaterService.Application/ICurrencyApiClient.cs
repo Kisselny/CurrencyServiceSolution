@@ -6,6 +6,7 @@ namespace CurrencyUpdaterService.Application;
 public interface ICurrencyApiClient
 {
     /// Получает список валют с их обменными курсами из внешнего API
+    /// <param name="ct"></param>
     /// <returns>Список валют с их обменными курсами</returns>
-    Task<List<Currency>> FetchCurrenciesAsync();
+    Task<List<Currency>> FetchCurrenciesAsync(CancellationToken ct);
 }

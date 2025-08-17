@@ -29,14 +29,14 @@ public class UserLoginUseCase
     /// <returns>Результат со сгенерированным JWT токеном</returns>
     /// <exception cref="ValidationException">Выбрасывается при отсутствии имени или пароля</exception>
     /// <exception cref="Exception">Выбрасывается при неверных учетных данных</exception>
-    public async Task<LoginUserResult> ExecuteAsync(LoginUserCommand cmd)
+    public async Task<LoginUserResult> ExecuteAsync(LoginUserCommand cmd, CancellationToken ct)
     {
         if (string.IsNullOrWhiteSpace(cmd.Name))
             throw new ValidationException("Необходимо ввести имя пользователя.");
         if (string.IsNullOrWhiteSpace(cmd.Password))
             throw new ValidationException("Необходимо ввести пароль.");
         
-        var user = await _userRepository.GetByNameAsync(cmd.Name);
+        var user = await _userRepository.GetByNameAsync(cmd.Name, ct);
 
         if (user == null)
             throw new Exception("Пользователь с таким именем не найден.");

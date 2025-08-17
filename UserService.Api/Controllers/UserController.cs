@@ -37,7 +37,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            await _registerUser.ExecuteAsync(command.Name, command.Password, command.ConfirmPassword);
+            await _registerUser.ExecuteAsync(command.Name, command.Password, command.ConfirmPassword, ct);
             return Created();
 
         }
@@ -57,7 +57,7 @@ public class UserController : ControllerBase
     {
         try
         {
-            var result = await _loginUser.ExecuteAsync(command);
+            var result = await _loginUser.ExecuteAsync(command, ct);
             return Ok(result);
         }
         catch (Exception ex)

@@ -39,9 +39,9 @@ public class Program
         app.UseAuthorization();
         
         //TODO вынести эту мишуру в контроллер
-        app.MapPost("/migrate", async (IMigrationRunner migrationRunner) =>
+        app.MapPost("/migrate", async (IMigrationRunner migrationRunner, CancellationToken cancellationToken) =>
             {
-                await migrationRunner.ApplyMigrationsAsync();
+                await migrationRunner.ApplyMigrationsAsync(cancellationToken);
                 return Results.Ok("Миграции успешно применены.");
             })
             //.RequireAuthorization()

@@ -15,22 +15,22 @@ public class UserRepository : IUserRepository
     public UserRepository(UserDbContext db) => _db = db;
 
     /// <inheritdoc />
-    public async Task<bool> ExistsByNameAsync(string name)
+    public async Task<bool> ExistsByNameAsync(string name, CancellationToken ct)
         => await _db.Users
             .AsNoTracking()
-            .AnyAsync(u => u.Name == name);
+            .AnyAsync(u => u.Name == name, ct);
 
 
     /// <inheritdoc />
-    public async Task<User?> GetByNameAsync(string name)
+    public async Task<User?> GetByNameAsync(string name, CancellationToken ct)
         => await _db.Users
             .AsNoTracking()
-            .SingleOrDefaultAsync(u => u.Name == name);
+            .SingleOrDefaultAsync(u => u.Name == name, ct);
 
     /// <inheritdoc />
-    public async Task AddNewUserAsync(User user)
+    public async Task AddNewUserAsync(User user, CancellationToken ct)
     {
-        await _db.Users.AddAsync(user);
-        await _db.SaveChangesAsync();
+        await _db.Users.AddAsync(user, ct);
+        await _db.SaveChangesAsync(ct);
     }
 }

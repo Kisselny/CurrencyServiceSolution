@@ -16,8 +16,9 @@ public class MigrationRunner : IMigrationRunner
         _context = context;
     }
 
+    /// <param name="ct"></param>
     /// <inheritdoc />
-    public async Task ApplyMigrationsAsync()
+    public async Task ApplyMigrationsAsync(CancellationToken ct)
     {
         await _context.Database.MigrateAsync();
     }

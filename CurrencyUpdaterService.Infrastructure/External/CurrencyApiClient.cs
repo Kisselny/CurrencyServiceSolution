@@ -15,8 +15,9 @@ public class CurrencyApiClient : ICurrencyApiClient
     public CurrencyApiClient(HttpClient http) => _http = http;
 
     /// Асинхронно получает список валют и их курсов из внешнего API
+    /// <param name="ct"></param>
     /// <returns>Список валют</returns>
-    public async Task<List<Currency>> FetchCurrenciesAsync()
+    public async Task<List<Currency>> FetchCurrenciesAsync(CancellationToken ct)
     {
         Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
         var url = "http://www.cbr.ru/scripts/XML_daily.asp";

@@ -8,5 +8,6 @@ namespace MigrationsService.Infrastructure;
 public interface IMigrationRunner
 {
     /// Асинхронно применяет все ожидающие миграции базы данных
-    Task ApplyMigrationsAsync();
+    /// <param name="ct"></param>
+    Task ApplyMigrationsAsync(CancellationToken ct);
 }

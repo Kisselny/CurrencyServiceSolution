@@ -25,9 +25,9 @@ namespace CurrencyUpdaterService.Worker
         /// <summary>
         /// Периодически обращается во внеший API за новыми данными о валютах
         /// </summary>
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 if (_logger.IsEnabled(LogLevel.Information))
                 {
@@ -38,10 +38,10 @@ namespace CurrencyUpdaterService.Worker
                 {
                     var migrationHealthService = provider.GetRequiredService<IMigrationHealthService>();
                     
-                    if (await migrationHealthService.IsMigrationReadyAsync(stoppingToken))
+                    if (await migrationHealthService.IsMigrationReadyAsync(cancellationToken))
                     {
                         var apiClient = provider.GetRequiredService<ICurrencyApiClient>();
-                        var currencies = await apiClient.FetchCurrenciesAsync();
+                        var currencies = await apiClient.FetchCurrenciesAsync(cancellationToken);
                         
                         var updateService = provider.GetRequiredService<ICurrencyUpdateService>();
                         await updateService.UpsertCurrenciesAsync(currencies);
@@ -53,7 +53,7 @@ namespace CurrencyUpdaterService.Worker
                     }
                 });
                 
-                await Task.Delay(1000, stoppingToken);
+                await Task.Delay(1000, cancellationToken);
             }
         }
     }
