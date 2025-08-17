@@ -4,16 +4,22 @@ using MigrationsService.Infrastructure;
 
 namespace MigrationsService.Api;
 
+/// Представляет проверку статуса миграций базы данных
 public class MigrationHealthCheck : IHealthCheck
 
 {
     private readonly MigrationDbContext _dbContext;
 
+    /// Представляет проверку статуса миграций базы данных
     public MigrationHealthCheck(MigrationDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
+    /// Выполняет проверку состояния миграций базы данных
+    /// <param name="context">Контекст проверки состояния</param>
+    /// <param name="cancellationToken">Токен отмены операции</param>
+    /// <return>Результат проверки состояния</return>
     public async Task<HealthCheckResult> CheckHealthAsync(
         HealthCheckContext context, CancellationToken cancellationToken = default)
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using MigrationsService.Domain.Models;
-using MigrationsService.Infrastructure.PersistentModels;
+using MigrationsService.Infrastructure.Persistence.PersistentModels;
 
 namespace MigrationsService.Infrastructure;
 
