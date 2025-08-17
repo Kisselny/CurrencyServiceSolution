@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using MigrationsService.Infrastructure;
+using MigrationsService.Infrastructure.Persistence;
 
 namespace MigrationsService.Api;
 

@@ -18,6 +18,7 @@ public class UserRegistrationUseCase
     /// <param name="name">Имя пользователя</param>
     /// <param name="password">Пароль</param>
     /// <param name="confirmPassword">Подтверждение пароля</param>
+    /// <param name="ct">Токен отмены</param>
     /// <exception cref="Exception">Выбрасывается при несовпадении пароля и подтверждения или при наличии пользователя с таким именем</exception>
     public async Task ExecuteAsync(string name, string password, string confirmPassword, CancellationToken ct)
     {

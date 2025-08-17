@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MigrationsService.Infrastructure.Persistence;
 
 namespace MigrationsService.Infrastructure;
 

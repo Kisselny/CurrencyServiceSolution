@@ -25,6 +25,7 @@ public class UserLoginUseCase
 
     /// Запускает процесс входа пользователя в системы
     /// <param name="cmd">Команда с именем и паролем пользователя</param>
+    /// <param name="ct">Токен отмены</param>
     /// <seealso cref="LoginUserCommand"/>
     /// <returns>Результат со сгенерированным JWT токеном</returns>
     /// <exception cref="ValidationException">Выбрасывается при отсутствии имени или пароля</exception>

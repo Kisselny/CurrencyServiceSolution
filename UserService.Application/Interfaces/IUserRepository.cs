@@ -7,11 +7,13 @@ public interface IUserRepository
 {
     /// Проверяет существование пользователя с указанным именем
     /// <param name="name">Имя пользователя для проверки</param>
+    /// <param name="ct">Токен отмены</param>
     /// <return>True если пользователь существует, иначе false</return>
     Task<bool> ExistsByNameAsync(string name, CancellationToken ct);
 
     /// Возвращает пользователя с указанным именем
     /// <param name="name">Имя пользователя для поиска</param>
+    /// <param name="ct">Токен отмены</param>
     /// <return>Пользователь с указанным именем или null, если не найден</return>
     Task<User> GetByNameAsync(string name, CancellationToken ct);
 

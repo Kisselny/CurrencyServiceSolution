@@ -1,20 +1,37 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 using MigrationsService.Domain.Models;
 using MigrationsService.Infrastructure.Persistence.PersistentModels;
 
-namespace MigrationsService.Infrastructure;
+namespace MigrationsService.Infrastructure.Persistence;
 
+/// <summary>
+/// Контекст БД сервиса миграций 
+/// </summary>
 public class MigrationDbContext : DbContext
 {
+    /// <summary>
+    /// Представляет таблицу валют
+    /// </summary>
     public DbSet<Currency> Currencies { get; set; }
+    /// <summary>
+    /// Представляет таблицу пользователей
+    /// </summary>
     public DbSet<User> Users { get; set; }
+    /// <summary>
+    /// Представляет таблицу избранных валют пользователей
+    /// </summary>
     public DbSet<FavoriteRow> Favorites { get; set; }
 
+    /// <summary>
+    /// Контекст БД сервиса миграций 
+    /// </summary>
+    /// <param name="options">Опции</param>
     public MigrationDbContext(DbContextOptions<MigrationDbContext> options)
             : base(options)
     {
     }
+
+    /// <inheritdoc />
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Currency>(entity =>
