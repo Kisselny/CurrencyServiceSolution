@@ -5,17 +5,30 @@ using UserService.Domain.Models;
 
 namespace UserService.Application.UseCases;
 
+
+/// <summary>
+/// Обрабатывает процесс входа пользователя в систему.
+/// Проверяет входные данные для входа, учетные данные пользователя и генерирует JWT токен
+/// </summary>
 public class UserLoginUseCase
 {
     private readonly IUserRepository _userRepository;
     private readonly IJwtTokenGenerator _jwt;
-    
+
+    /// Обрабатывает процесс входа пользователя в систему.
+    /// Проверяет учетные данные и возвращает JWT токен
     public UserLoginUseCase(IUserRepository userRepository, IJwtTokenGenerator jwt)
     {
         _userRepository = userRepository;
         _jwt = jwt;
     }
-    
+
+    /// Запускает процесс входа пользователя в системы
+    /// <param name="cmd">Команда с именем и паролем пользователя</param>
+    /// <seealso cref="LoginUserCommand"/>
+    /// <returns>Результат со сгенерированным JWT токеном</returns>
+    /// <exception cref="ValidationException">Выбрасывается при отсутствии имени или пароля</exception>
+    /// <exception cref="Exception">Выбрасывается при неверных учетных данных</exception>
     public async Task<LoginUserResult> ExecuteAsync(LoginUserCommand cmd)
     {
         if (string.IsNullOrWhiteSpace(cmd.Name))

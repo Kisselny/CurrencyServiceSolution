@@ -3,11 +3,20 @@ using UserService.Application.Interfaces;
 
 namespace UserService.Api.Controllers;
 
+/// <summary>
+/// Внутренний контроллер для обработки запросов, связанных с избранным пользователей в системе
+/// </summary>
+/// <remarks>Предназначен для микросервиса валют</remarks>
 [ApiController]
 [Route("internal/users")]
 //[ApiExplorerSettings(IgnoreApi = true)] //это позже
 public class UserFavoritesInternalController : ControllerBase
 {
+    /// Получает список избранных записей пользователя
+    /// <param name="id">Идентификатор пользователя</param>
+    /// <param name="repo">Репозиторий для работы с избранным</param>
+    /// <param name="ct">Токен отмены операции</param>
+    /// <returns>Список имен избранных записей пользователя</returns>
     [HttpGet("{id:int}/favorites")]
     public async Task<ActionResult<IReadOnlyList<string>>> GetFavorites(
         [FromRoute] int id,
