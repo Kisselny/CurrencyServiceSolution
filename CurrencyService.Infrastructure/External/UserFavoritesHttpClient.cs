@@ -1,6 +1,7 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using CurrencyService.Application.Interfaces;
+using Microsoft.Extensions.Options;
 
 namespace CurrencyService.Infrastructure.External;
 
@@ -10,10 +11,10 @@ public class UserFavoritesHttpClient : IUserFavoritesClient
     private readonly UserServiceClientOptions _options;
     private static readonly JsonSerializerOptions _json = new(JsonSerializerDefaults.Web);
 
-    public UserFavoritesHttpClient(HttpClient httpClient, UserServiceClientOptions options)
+    public UserFavoritesHttpClient(HttpClient httpClient, IOptions<UserServiceClientOptions>  options)
     {
         _httpClient = httpClient;
-        _options = options;
+        _options = options.Value;
         
         if (string.IsNullOrWhiteSpace(_options.BaseUrl))
             throw new InvalidOperationException("BaseUrl не сконфигурирован.");
@@ -22,24 +23,25 @@ public class UserFavoritesHttpClient : IUserFavoritesClient
 
     public async Task<IReadOnlyList<string>> GetFavoritesAsync(int userId, CancellationToken ct = default)
     {
-        // внутренний маршрут UserService (скрытый из Swagger)
-        using var request = new HttpRequestMessage(HttpMethod.Get, $"/internal/users/{userId}/favorites");
+        using (var request = new HttpRequestMessage(HttpMethod.Get, $"/internal/users/{userId}/favorites"))
+        {
+            using (var response = await _httpClient.SendAsync(request, ct))
+            {
+                if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    return Array.Empty<string>();
 
-        using var response = await _httpClient.SendAsync(request, ct);
+                response.EnsureSuccessStatusCode();
 
-        if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-            return Array.Empty<string>(); // у юзера нет favorites
+                var list = await response.Content.ReadFromJsonAsync<List<string>>(_json, ct)
+                           ?? new List<string>();
 
-        response.EnsureSuccessStatusCode();
-
-        var list = await response.Content.ReadFromJsonAsync<List<string>>(_json, ct)
-                   ?? new List<string>();
-        
-        return list
-            .Where(s => !string.IsNullOrWhiteSpace(s))
-            .Select(s => s.Trim().ToUpperInvariant())
-            .Distinct()
-            .ToList()
-            .AsReadOnly();
+                return list
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .Select(s => s.Trim().ToUpperInvariant())
+                    .Distinct()
+                    .ToList()
+                    .AsReadOnly();
+            }
+        }
     }
 }
