@@ -27,7 +27,8 @@ public class CurrencyRepository : ICurrencyRepository
 
         return await _dbContext.Currencies
             .AsNoTracking()
-            .Where(c => normalized.Contains(c.Name))
+            .Where(c => normalized.Contains(c.Name.Trim().ToUpper()
+            ))
             .ToListAsync(ct);
     }
 
