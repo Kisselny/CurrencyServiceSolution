@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Logging;
 using UserService.Application.Contracts;
 using UserService.Application.Interfaces;
 using UserService.Domain.Models;
@@ -14,13 +15,15 @@ public class UserLoginUseCase
 {
     private readonly IUserRepository _userRepository;
     private readonly IJwtTokenGenerator _jwt;
+    private readonly ILogger<UserLoginUseCase> _logger;
 
     /// Обрабатывает процесс входа пользователя в систему.
     /// Проверяет учетные данные и возвращает JWT токен
-    public UserLoginUseCase(IUserRepository userRepository, IJwtTokenGenerator jwt)
+    public UserLoginUseCase(IUserRepository userRepository, IJwtTokenGenerator jwt, ILogger<UserLoginUseCase> logger)
     {
         _userRepository = userRepository;
         _jwt = jwt;
+        _logger = logger;
     }
 
     /// Запускает процесс входа пользователя в системы
@@ -33,20 +36,32 @@ public class UserLoginUseCase
     public async Task<LoginUserResult> ExecuteAsync(LoginUserCommand cmd, CancellationToken ct)
     {
         if (string.IsNullOrWhiteSpace(cmd.Name))
+        {
+            _logger.LogError("Необходимо ввести имя пользователя.");
             throw new ValidationException("Необходимо ввести имя пользователя.");
+        }
         if (string.IsNullOrWhiteSpace(cmd.Password))
+        {
+            _logger.LogError("Необходимо ввести пароль.");
             throw new ValidationException("Необходимо ввести пароль.");
+        }
         
         var user = await _userRepository.GetByNameAsync(cmd.Name, ct);
 
         if (user == null)
+        {
+            _logger.LogError("Польозватель с таким именем не найден: {Name}", cmd.Name);
             throw new Exception("Пользователь с таким именем не найден.");
+        }
 
         if (!user.IsPasswordCorrect(cmd.Password))
+        {
+            _logger.LogError("Был введен неверный пароль пользователем {Name}.", cmd.Name);
             throw new Exception("Неверный пароль.");
+        }
         
         var token = _jwt.GenerateToken(user.Id, user.Name);
-        
+        _logger.LogInformation("Пользователь {Name} залогировался в систему", cmd.Name);
         return new LoginUserResult(token);
     }
 }

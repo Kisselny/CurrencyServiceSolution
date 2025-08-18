@@ -27,6 +27,13 @@ public class Program
 
 
         var app = builder.Build();
+        
+        using (var scope = app.Services.CreateScope())
+        {
+            var migrationRunner = scope.ServiceProvider.GetRequiredService<IMigrationRunner>();
+            migrationRunner.ApplyMigrationsAsync(CancellationToken.None).GetAwaiter().GetResult();
+        }
+
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
@@ -38,6 +45,8 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
+        
+        
         
         //TODO вынести эту мишуру в контроллер
         app.MapPost("/migrate", async (IMigrationRunner migrationRunner, CancellationToken cancellationToken) =>

@@ -7,14 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CurrencyService.Api.Controllers;
 
+/// <summary>
 /// Представляет контроллер для работы с валютами
+/// </summary>
 [ApiController]
 [Route("[controller]")]
 public class CurrencyController : ControllerBase
 {
     private readonly ILogger<CurrencyController> _logger;
     private readonly GetUserFavoriteCurrenciesUseCase _byUser;
-    //private readonly GetRatesByCodesUseCase _byCodes;
 
     /// Контроллер для операций над валютами
     public CurrencyController(ILogger<CurrencyController> logger, GetUserFavoriteCurrenciesUseCase byUser)
@@ -23,7 +24,9 @@ public class CurrencyController : ControllerBase
         _byUser = byUser;
     }
 
+    /// <summary>
     /// Возвращает избранные валюты текущего пользователя
+    /// </summary>
     /// <param name="ct">Токен отмены операции</param>
     /// <return>Результат выполнения с коллекцией избранных валют</return>
     [Authorize]
@@ -46,8 +49,6 @@ public class CurrencyController : ControllerBase
     
     private int? TryGetUserId()
     {
-        // Если в AddJwtBearer включено MapInboundClaims=false → "sub"
-        // Иначе .NET маппит "sub" в ClaimTypes.NameIdentifier
         var sub = User.FindFirstValue(ClaimTypes.NameIdentifier)
                   ?? User.FindFirstValue("sub");
 

@@ -12,8 +12,10 @@ namespace UserService.Api.Controllers;
 //[ApiExplorerSettings(IgnoreApi = true)] //это позже
 public class UserFavoritesInternalController : ControllerBase
 {
-    /// Получает список избранных записей пользователя
-    /// <param name="id">Идентификатор пользователя</param>
+    /// <summary>
+    /// Получает список избранных записей пользователя (используется микросервисом валют)
+    /// </summary>
+    /// <param name="id">Идентификатор пользователя (берется из JWT)</param>
     /// <param name="repo">Репозиторий для работы с избранным</param>
     /// <param name="ct">Токен отмены операции</param>
     /// <returns>Список имен избранных записей пользователя</returns>
