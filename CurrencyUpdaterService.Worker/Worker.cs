@@ -29,6 +29,8 @@ namespace CurrencyUpdaterService.Worker
         {
             while (!cancellationToken.IsCancellationRequested)
             {
+                var TimePeriod = TimeSpan.FromMinutes(5);
+
                 if (_logger.IsEnabled(LogLevel.Information))
                 {
                     _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
@@ -50,10 +52,11 @@ namespace CurrencyUpdaterService.Worker
                     else
                     {
                         _logger.LogWarning("Миграции не применены. Данные не были запрошены из внешнего API и  не сохранены в базу данных.");
+                        TimePeriod = TimeSpan.FromMinutes(1);
                     }
                 });
                 
-                await Task.Delay(TimeSpan.FromMinutes(5), cancellationToken);
+                await Task.Delay(TimePeriod, cancellationToken);
             }
         }
     }
