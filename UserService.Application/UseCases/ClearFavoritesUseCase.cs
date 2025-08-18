@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using UserService.Application.Contracts;
 using UserService.Application.Interfaces;
 
@@ -7,13 +8,15 @@ namespace UserService.Application.UseCases;
 public class ClearFavoritesUseCase
 {
     private readonly IFavoritesRepository _favoritesRepository;
+    private readonly ILogger<ClearFavoritesUseCase> _logger;
     /// <summary>
     /// Обрабатывает удаление всех валют из списка избранных пользователя
     /// </summary>
     /// <param name="favoritesRepository">Репозиторий избранного</param>
-    public ClearFavoritesUseCase(IFavoritesRepository favoritesRepository)
+    public ClearFavoritesUseCase(IFavoritesRepository favoritesRepository, ILogger<ClearFavoritesUseCase> logger)
     {
         _favoritesRepository = favoritesRepository;
+        _logger = logger;
     }
 
     /// <summary>
@@ -27,7 +30,8 @@ public class ClearFavoritesUseCase
     {
         if (cmd.UserId <= 0)
         {
-            throw new ArgumentException("Invalid user id");
+            _logger.LogError("UserId должен быть больше нуля");
+            throw new ArgumentException("UserId должен быть больше нуля");
         }
         return await _favoritesRepository.ClearAsync(cmd.UserId, ct);
     }
