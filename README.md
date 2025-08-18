@@ -6,6 +6,7 @@
 - `src/GatewayService` — API Gateway (шлюз)
 - `src/CurrencyUpdaterBackgroundService` — фоновый сервис обновления курсов валют
 - `src/MigrationsService` — сервис миграций БД
+- `tests/*` — тесты
 
 
 ## Требования к окружению:
