@@ -7,15 +7,26 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace UserService.Infrastructure;
 
+/// <inheritdoc />
 public class JwtTokenGenerator : IJwtTokenGenerator
 {
     private readonly IConfiguration _config;
 
+    /// <summary>
+    /// Предоставляет функциональность для генерации JWT токено
+    /// </summary>
+    /// <param name="config">Параметры конфигурации</param>
     public JwtTokenGenerator(IConfiguration config)
     {
         _config = config;
     }
 
+    /// <summary>
+    /// Генерирует JWT токен для указанного пользователя
+    /// </summary>
+    /// <param name="userId">Идентификатор пользователя</param>
+    /// <param name="userName">Имя пользователя</param>
+    /// <returns>Сгенерированный JWT токен</returns>
     public string GenerateToken(int userId, string userName)
     {
         var jwtSection = _config.GetSection("Jwt");

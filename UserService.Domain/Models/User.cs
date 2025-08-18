@@ -1,10 +1,19 @@
 ﻿namespace UserService.Domain.Models;
 
+/// <summary>
+/// Сущность пользователя
+/// </summary>
 public class User
 {
     #region properties
 
+    /// <summary>
+    /// Идентификатор пользователя
+    /// </summary>
     public int Id { get; set; }
+    /// <summary>
+    /// Имя пользователя
+    /// </summary>
     public string Name { get; private set; }
     private string _password;
 
@@ -15,6 +24,11 @@ public class User
     //Для EF Core
     private User() { }
 
+    /// <summary>
+    /// Конструктор для сценария регистрации нового пользователя
+    /// </summary>
+    /// <param name="name">Имя пользователя</param>
+    /// <param name="password">Пароль</param>
     public User(string name, string password)
     {
         ValidateUsernameIsNotNullOrEmpty(name);
@@ -30,8 +44,17 @@ public class User
 
     #region public methods
     
+    /// <summary>
+    /// Проверка правильности пароля
+    /// </summary>
+    /// <param name="password"></param>
+    /// <returns></returns>
     public bool IsPasswordCorrect(string password) => _password == password;
 
+    /// <summary>
+    /// Изменяет имя пользователя
+    /// </summary>
+    /// <param name="newName">Новое имя пользователя</param>
     public void ChangeName(string newName)
     {
         ValidateUsernameIsNotNullOrEmpty(newName);
@@ -39,7 +62,11 @@ public class User
         EnsureNewNameIsDifferent(newName);
         Name = newName;
     }
-    
+
+    /// <summary>
+    /// Изменяет пароль пользователя
+    /// </summary>
+    /// <param name="newPassword">Новый пароль</param>
     public void ChangePassword(string newPassword)
     {
         ValidatePasswordIsNotNullOrEmpty(newPassword);

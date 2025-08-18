@@ -1,17 +1,24 @@
 ﻿using CurrencyService.Application.Interfaces;
 using CurrencyService.Domain;
+using CurrencyService.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CurrencyService.Infrastructure.Persistence;
 
+/// <inheritdoc />
 public class CurrencyRepository : ICurrencyRepository
 {
     private readonly CurrencyDbContext _dbContext;
+    /// <summary>
+    /// Репозиторий валют
+    /// </summary>
+    /// <param name="dbContext">Контекст БД валют</param>
     public CurrencyRepository(CurrencyDbContext dbContext)
     {
         _dbContext = dbContext;
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<Currency>> GetByCodesAsync(IEnumerable<string> codes, CancellationToken ct = default)
     {
         var normalized = codes
@@ -32,6 +39,7 @@ public class CurrencyRepository : ICurrencyRepository
             .ToListAsync(ct);
     }
 
+    /// <inheritdoc />
     public async Task<IReadOnlyList<Currency>> GetAllAsync(CancellationToken ct = default)
     {
         return await _dbContext.Currencies.AsNoTracking().ToListAsync(ct);

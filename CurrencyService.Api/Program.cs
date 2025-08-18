@@ -9,8 +9,10 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace CurrencyService.Api;
 
+///
 public class Program
 {
+    ///
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);

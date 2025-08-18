@@ -3,16 +3,23 @@ using UserService.Application.Interfaces;
 
 namespace UserService.Application.UseCases;
 
+/// Обрабатывает добавление валюты в список избранных пользователя
 public class AddFavoriteUseCase
 {
     private readonly IFavoritesRepository _favoritesRepository;
     private static readonly int MaxLen = 30;
 
+    /// Обрабатывает добавление валюты в список избранных пользователя
     public AddFavoriteUseCase(IFavoritesRepository favoritesRepository)
     {
         _favoritesRepository = favoritesRepository;
     }
 
+    /// <summary>
+    /// Запускает выполнение команды добавления валюты в список избранных
+    /// </summary>
+    /// <param name="command">Команда с данными для добавления валюты в избранное</param>
+    /// <param name="ct">Токен отмены</param>
     public async Task Handle(AddFavoriteCommand command, CancellationToken ct = default)
     {
         if (command.UserId <= 0)

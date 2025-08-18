@@ -6,13 +6,18 @@ using CurrencyUpdaterService.Domain.Models;
 
 namespace CurrencyUpdaterService.Infrastructure.External;
 
+/// Предоставляет методы для получения данных о валютах из внешнего API
 public class CurrencyApiClient : ICurrencyApiClient
 {
     private readonly HttpClient _http;
 
+    /// Предоставляет методы для получения данных о валютах из внешнего API
     public CurrencyApiClient(HttpClient http) => _http = http;
-    
-    public async Task<List<Currency>> FetchCurrenciesAsync()
+
+    /// Асинхронно получает список валют и их курсов из внешнего API
+    /// <param name="ct"></param>
+    /// <returns>Список валют</returns>
+    public async Task<List<Currency>> FetchCurrenciesAsync(CancellationToken ct)
     {
         Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
         var url = "http://www.cbr.ru/scripts/XML_daily.asp";

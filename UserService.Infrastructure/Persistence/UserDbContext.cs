@@ -3,11 +3,24 @@ using UserService.Domain.Models;
 
 namespace UserService.Infrastructure.Persistence;
 
+/// <summary>
+/// Контекст БД пользователей
+/// </summary>
 public class UserDbContext : DbContext
 {
+    /// <summary>
+    /// Контекст БД пользователей
+    /// </summary>
+    /// <param name="options">Опции</param>
     public UserDbContext(DbContextOptions<UserDbContext> options) : base(options) { }
 
+    /// <summary>
+    /// Представляет таблицу пользователей
+    /// </summary>
     public DbSet<User> Users => Set<User>();
+    /// <summary>
+    /// Представляет таблицу кодов избранных валют пользователей
+    /// </summary>
     public DbSet<FavoriteRow> Favorites => Set<FavoriteRow>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)

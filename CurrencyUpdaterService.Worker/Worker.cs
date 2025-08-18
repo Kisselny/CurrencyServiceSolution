@@ -5,21 +5,32 @@ using CurrencyUpdaterService.Worker.Services;
 
 namespace CurrencyUpdaterService.Worker
 {
+    /// <summary>
+    /// Фоновый сервис, отвечающий за обновление курсов валют
+    /// </summary>
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
         private readonly CustomServiceScopeFactory _scopeFactory;
 
+        /// <summary>
+        /// Фоновый сервис, отвечающий за обновление курсов валют
+        /// </summary>
         public Worker(ILogger<Worker> logger, CustomServiceScopeFactory scopeFactory)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        /// <summary>
+        /// Периодически обращается во внеший API за новыми данными о валютах
+        /// </summary>
+        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            while (!cancellationToken.IsCancellationRequested)
             {
+                var TimePeriod = TimeSpan.FromMinutes(5);
+
                 if (_logger.IsEnabled(LogLevel.Information))
                 {
                     _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
@@ -29,10 +40,10 @@ namespace CurrencyUpdaterService.Worker
                 {
                     var migrationHealthService = provider.GetRequiredService<IMigrationHealthService>();
                     
-                    if (await migrationHealthService.IsMigrationReadyAsync(stoppingToken))
+                    if (await migrationHealthService.IsMigrationReadyAsync(cancellationToken))
                     {
                         var apiClient = provider.GetRequiredService<ICurrencyApiClient>();
-                        var currencies = await apiClient.FetchCurrenciesAsync();
+                        var currencies = await apiClient.FetchCurrenciesAsync(cancellationToken);
                         
                         var updateService = provider.GetRequiredService<ICurrencyUpdateService>();
                         await updateService.UpsertCurrenciesAsync(currencies);
@@ -41,10 +52,11 @@ namespace CurrencyUpdaterService.Worker
                     else
                     {
                         _logger.LogWarning("Миграции не применены. Данные не были запрошены из внешнего API и  не сохранены в базу данных.");
+                        TimePeriod = TimeSpan.FromMinutes(1);
                     }
                 });
                 
-                await Task.Delay(1000, stoppingToken);
+                await Task.Delay(TimePeriod, cancellationToken);
             }
         }
     }
