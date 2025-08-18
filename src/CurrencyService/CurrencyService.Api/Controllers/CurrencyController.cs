@@ -16,12 +16,14 @@ public class CurrencyController : ControllerBase
 {
     private readonly ILogger<CurrencyController> _logger;
     private readonly GetUserFavoriteCurrenciesUseCase _byUser;
+    private readonly JustGetAllCurrenciesUseCase _allCurrencies;
 
     /// Контроллер для операций над валютами
-    public CurrencyController(ILogger<CurrencyController> logger, GetUserFavoriteCurrenciesUseCase byUser)
+    public CurrencyController(ILogger<CurrencyController> logger, GetUserFavoriteCurrenciesUseCase byUser, JustGetAllCurrenciesUseCase allCurrencies)
     {
         _logger = logger;
         _byUser = byUser;
+        _allCurrencies = allCurrencies;
     }
 
     /// <summary>
@@ -45,6 +47,27 @@ public class CurrencyController : ControllerBase
         {
             return BadRequest(new { error = ex.Message });
         }
+    }
+    
+    /// <summary>
+    /// Возвращает текущие курсы валют
+    /// </summary>
+    /// <param name="ct">Токен отмены</param>
+    /// <returns>Массив курсов валют</returns>
+    [AllowAnonymous]
+    [HttpGet("all-currencies")]
+    public async Task<IActionResult> GetAllCurrencies(CancellationToken ct)
+    {
+        try
+        {
+            var result = await _allCurrencies.ExecuteAsync(ct);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+        
     }
     
     private int? TryGetUserId()

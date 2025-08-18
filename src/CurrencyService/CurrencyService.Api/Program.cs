@@ -76,10 +76,7 @@ public class Program
         builder.Services.Configure<UserServiceClientOptions>(builder.Configuration.GetSection("UserService"));
         builder.Services.AddHttpClient<IUserFavoritesClient, UserFavoritesHttpClient>();
         builder.Services.AddScoped<GetUserFavoriteCurrenciesUseCase>();
-        
-        
-        //builder.Services.AddScoped<GetRatesByCodesUseCase>();
-
+        builder.Services.AddScoped<JustGetAllCurrenciesUseCase>();
 
         var app = builder.Build();
 
