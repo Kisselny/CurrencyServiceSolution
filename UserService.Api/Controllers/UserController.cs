@@ -9,7 +9,9 @@ using UserService.Application.UseCases;
 
 namespace UserService.Api.Controllers;
 
+/// <summary>
 /// Предоставляет конечные точки для управления регистрацией, аутентификацией и другими действиями пользователя
+/// </summary>
 [ApiController]
 [Route("[controller]")]
 public class UserController : ControllerBase
@@ -27,7 +29,9 @@ public class UserController : ControllerBase
         _registerUser = registerUser;
     }
 
+    /// <summary>
     /// Обрабатывает запрос на регистрацию нового пользователя
+    /// </summary>
     /// <param name="command">Команда, содержащая имя, пароль и подтверждение пароля для регистрации</param>
     /// <param name="ct">Токен отмены для управления длительностью выполнения операции</param>
     /// <returns>Результат выполнения операции регистрации</returns>
@@ -47,7 +51,9 @@ public class UserController : ControllerBase
         }
     }
 
+    /// <summary>
     /// Выполняет вход пользователя на платформу
+    /// </summary>
     /// <param name="command">Данные для аутентификации пользователя</param>
     /// <param name="ct">Токен отмены операции</param>
     /// <returns>Результат с JWT токеном в случае успешной аутентификации</returns>
@@ -66,7 +72,9 @@ public class UserController : ControllerBase
         }
     }
 
+    /// <summary>
     /// Завершает текущий сеанс пользователя, отзывая активный токен
+    /// </summary>
     /// <param name="store">Хранилище для отзыва токенов</param>
     /// <param name="ct">Токен отмены</param>
     [Authorize]
@@ -85,7 +93,9 @@ public class UserController : ControllerBase
     }
 
 
+    /// <summary>
     /// Добавляет валюту в список избранных пользователя
+    /// </summary>
     /// <param name="code">Код валюты для добавления в избранное</param>
     /// <param name="useCase">Используемый сценарий добавления в избранное</param>
     /// <param name="ct">Токен для отмены операции</param>
@@ -108,7 +118,9 @@ public class UserController : ControllerBase
         return NoContent();
     }
 
+    /// <summary>
     /// Удаляет все записи из избранного для авторизованного пользователя
+    /// </summary>
     /// <param name="useCase">Вариант использования для выполнения операции очистки избранного</param> 
     /// <param name="ct">Токен отмены операции</param>
     /// <returns>HTTP результат, указывающий на исход операции</returns>
@@ -126,7 +138,9 @@ public class UserController : ControllerBase
         return Ok(new { deleted });
     }
     
-    //test shit
+    /// <summary>
+    /// test shit
+    /// </summary>
     [Authorize]
     [HttpGet("me/ping")]
     public ActionResult<object> MePing()
@@ -144,7 +158,9 @@ public class UserController : ControllerBase
         });
     }
     
-    //debug shit
+    /// <summary>
+    /// debug shit
+    /// </summary>
     [Authorize]
     [HttpGet("me/claims")]
     public IActionResult ClaimsDump()
