@@ -29,7 +29,7 @@ namespace CurrencyUpdaterService.Worker
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                var TimePeriod = TimeSpan.FromMinutes(5);
+                var timePeriod = TimeSpan.FromMinutes(5);
 
                 if (_logger.IsEnabled(LogLevel.Information))
                 {
@@ -47,16 +47,16 @@ namespace CurrencyUpdaterService.Worker
                         
                         var updateService = provider.GetRequiredService<ICurrencyUpdateService>();
                         await updateService.UpsertCurrenciesAsync(currencies);
-                        _logger.LogInformation("Миграции применены. Данные запрошены из внешнего API и сохранены в базу данных.");
+                        _logger.LogInformation("Миграции применены. Данные запрошены из внешнего API и сохранены в базу данных. Следующее обновление через: {time} минут.", timePeriod.Minutes);
                     }
                     else
                     {
-                        _logger.LogWarning("Миграции не применены. Данные не были запрошены из внешнего API и  не сохранены в базу данных.");
-                        TimePeriod = TimeSpan.FromMinutes(1);
+                        timePeriod = TimeSpan.FromMinutes(1);
+                        _logger.LogWarning("Миграции не применены или сервис миграций не ответил. Данные не были запрошены из внешнего API и  не сохранены в базу данных. Следующая попытка через: {time} минут.", timePeriod.Minutes);
                     }
                 });
                 
-                await Task.Delay(TimePeriod, cancellationToken);
+                await Task.Delay(timePeriod, cancellationToken);
             }
         }
     }
