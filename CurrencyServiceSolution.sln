@@ -38,13 +38,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Infrastructure"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CurrencyService", "CurrencyService", "{442A9265-0721-430F-8358-917EE8C913DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Domain", "CurrencyService.Domain\CurrencyService.Domain.csproj", "{1B2EFBA7-C834-4C11-880B-C8B251CA96C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Domain", "CurrencyService\CurrencyService.Domain\CurrencyService.Domain.csproj", "{1B2EFBA7-C834-4C11-880B-C8B251CA96C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Application", "CurrencyService.Application\CurrencyService.Application.csproj", "{8F2F22D7-4589-479D-A9BA-A979582E1096}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Application", "CurrencyService\CurrencyService.Application\CurrencyService.Application.csproj", "{8F2F22D7-4589-479D-A9BA-A979582E1096}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Infrastructure", "CurrencyService.Infrastructure\CurrencyService.Infrastructure.csproj", "{D4512216-A865-4F0F-9EB2-D4AAC21F3B18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Infrastructure", "CurrencyService\CurrencyService.Infrastructure\CurrencyService.Infrastructure.csproj", "{D4512216-A865-4F0F-9EB2-D4AAC21F3B18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Api", "CurrencyService.Api\CurrencyService.Api.csproj", "{FD06D772-3FF3-4637-B713-29F386F80A2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Api", "CurrencyService\CurrencyService.Api\CurrencyService.Api.csproj", "{FD06D772-3FF3-4637-B713-29F386F80A2A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GatewayService", "GatewayService", "{A9CFA669-34DA-4B9F-AAB5-4DAC971BE1AB}"
 EndProject
