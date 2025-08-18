@@ -3,23 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36202.13 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyUpdaterService.Worker", "CurrencyUpdaterBackgroundService\CurrencyUpdaterService.Worker\CurrencyUpdaterService.Worker.csproj", "{B721C365-ECE2-4C34-BC09-17ABA7664F39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyUpdaterService.Worker", "src\CurrencyUpdaterBackgroundService\CurrencyUpdaterService.Worker\CurrencyUpdaterService.Worker.csproj", "{B721C365-ECE2-4C34-BC09-17ABA7664F39}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CurrencyUpdaterService", "CurrencyUpdaterService", "{29C2B407-10C2-4D86-ABB2-2B47B08B67DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyUpdaterService.Infrastructure", "CurrencyUpdaterBackgroundService\CurrencyUpdaterService.Infrastructure\CurrencyUpdaterService.Infrastructure.csproj", "{B2E621BF-9565-4508-9149-CCF5F0684DB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyUpdaterService.Infrastructure", "src\CurrencyUpdaterBackgroundService\CurrencyUpdaterService.Infrastructure\CurrencyUpdaterService.Infrastructure.csproj", "{B2E621BF-9565-4508-9149-CCF5F0684DB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyUpdaterService.Domain", "CurrencyUpdaterBackgroundService\CurrencyUpdaterService.Domain\CurrencyUpdaterService.Domain.csproj", "{593A86E5-D880-4B48-BA20-E48F6CC6120B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyUpdaterService.Domain", "src\CurrencyUpdaterBackgroundService\CurrencyUpdaterService.Domain\CurrencyUpdaterService.Domain.csproj", "{593A86E5-D880-4B48-BA20-E48F6CC6120B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyUpdaterService.Application", "CurrencyUpdaterBackgroundService\CurrencyUpdaterService.Application\CurrencyUpdaterService.Application.csproj", "{B50A7F48-B636-4A33-B2AA-30E5FCF1074A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyUpdaterService.Application", "src\CurrencyUpdaterBackgroundService\CurrencyUpdaterService.Application\CurrencyUpdaterService.Application.csproj", "{B50A7F48-B636-4A33-B2AA-30E5FCF1074A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MigrationsService", "MigrationsService", "{4C55AF8F-EDBA-4613-A4AF-FCF5F8FEDDAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationsService.Domain", "MigrationsService\MigrationsService.Domain\MigrationsService.Domain.csproj", "{33E2B0AD-5FD7-4D8C-A214-BCB180F9FC2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationsService.Domain", "src\MigrationsService\MigrationsService.Domain\MigrationsService.Domain.csproj", "{33E2B0AD-5FD7-4D8C-A214-BCB180F9FC2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationsService.Infrastructure", "MigrationsService\MigrationsService.Infrastructure\MigrationsService.Infrastructure.csproj", "{A1FF6EEF-61B4-41CC-A43B-5D95543FD511}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationsService.Infrastructure", "src\MigrationsService\MigrationsService.Infrastructure\MigrationsService.Infrastructure.csproj", "{A1FF6EEF-61B4-41CC-A43B-5D95543FD511}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationsService.Api", "MigrationsService\MigrationsService.Api\MigrationsService.Api.csproj", "{EBC84BC2-DBB8-48EB-B336-C7968B4FFBBC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationsService.Api", "src\MigrationsService\MigrationsService.Api\MigrationsService.Api.csproj", "{EBC84BC2-DBB8-48EB-B336-C7968B4FFBBC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C02CE41E-4559-4CF8-BD0C-07F142B07B8D}"
 	ProjectSection(SolutionItems) = preProject
@@ -38,17 +38,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Infrastructure"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CurrencyService", "CurrencyService", "{442A9265-0721-430F-8358-917EE8C913DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Domain", "CurrencyService\CurrencyService.Domain\CurrencyService.Domain.csproj", "{1B2EFBA7-C834-4C11-880B-C8B251CA96C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Domain", "src\CurrencyService\CurrencyService.Domain\CurrencyService.Domain.csproj", "{1B2EFBA7-C834-4C11-880B-C8B251CA96C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Application", "CurrencyService\CurrencyService.Application\CurrencyService.Application.csproj", "{8F2F22D7-4589-479D-A9BA-A979582E1096}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Application", "src\CurrencyService\CurrencyService.Application\CurrencyService.Application.csproj", "{8F2F22D7-4589-479D-A9BA-A979582E1096}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Infrastructure", "CurrencyService\CurrencyService.Infrastructure\CurrencyService.Infrastructure.csproj", "{D4512216-A865-4F0F-9EB2-D4AAC21F3B18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Infrastructure", "src\CurrencyService\CurrencyService.Infrastructure\CurrencyService.Infrastructure.csproj", "{D4512216-A865-4F0F-9EB2-D4AAC21F3B18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Api", "CurrencyService\CurrencyService.Api\CurrencyService.Api.csproj", "{FD06D772-3FF3-4637-B713-29F386F80A2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyService.Api", "src\CurrencyService\CurrencyService.Api\CurrencyService.Api.csproj", "{FD06D772-3FF3-4637-B713-29F386F80A2A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GatewayService", "GatewayService", "{A9CFA669-34DA-4B9F-AAB5-4DAC971BE1AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatewayService.Api", "GatewayService\GatewayService.Api\GatewayService.Api.csproj", "{3D0B959A-C8FC-4BF6-86D0-29050547D3FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatewayService.Api", "src\GatewayService\GatewayService.Api\GatewayService.Api.csproj", "{3D0B959A-C8FC-4BF6-86D0-29050547D3FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
